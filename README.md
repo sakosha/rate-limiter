@@ -24,6 +24,7 @@ limit_req_zone $binary_remote_addr zone=one:10m rate=5/s;
 Configuration
 - we rate limiting per IP, we reserve 10mb for IPs  # okay solution as requests are from clients
 - we set limit to 5 RPS per IP
+- we allow up to 10 requests right after the limit of 5, so folks could retry if it's a network issue
 - we set nginx to limit on /api as it a standard
 - nginx is used as it well established & fast. other options could be 
   - traefik (better monitoring, slower under extreme load, doesn't serve static content that could be required)
@@ -35,8 +36,8 @@ Why on proxy?
 - Goal achieved: now we do not have a performance degradation as we don't receive these requests.
 
 Tradeoffs:
-- caller of our api have to handle bad responses
-  - perhaps retry?
+- caller of our api have to handle bad responses, perhaps:
+  - retry?
   - put in queue?
   - return error down the line?
   - display error to the user?
