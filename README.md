@@ -1,4 +1,7 @@
 # TLDR
+
+nginx handles rate-limiting in /nginx/default.conf
+
 run rate-limiter example
 ```bash
 docker compose up
